@@ -11,7 +11,7 @@ def generate_text(prompt, api_key, discussions):
     discussions.append({"role": "user", "content": prompt})
     
     completion = openai.Completion.create(
-        engine="text-davinci-003",  # GPT-3.5 Turbo
+        engine="gpt-4-turbo",  # GPT-3.5 Turbo
         prompt="\n".join([msg['content'] for msg in discussions]),
         temperature=0.7,
         max_tokens=150

@@ -5,21 +5,21 @@ import json
 import time
 
 # Function for text generation
+# Function for text generation
 def generate_text(prompt, api_key, discussions):
     openai.api_key = api_key
     
     discussions.append({"role": "user", "content": prompt})
     
-    completion = openai.Completion.create(
-        engine="gpt-4-turbo",  # GPT-3.5 Turbo
-        prompt="\n".join([msg['content'] for msg in discussions]),
-        temperature=0.7,
-        max_tokens=150
+    completion = openai.ChatCompletion.create(
+        model="gpt-4-turbo",  # GPT-4 Turbo
+        messages=discussions
     )
 
-    response = completion.choices[0].text.strip()
+    response = completion.choices[0].message.content
     discussions.append({"role": "assistant", "content": response})
     return response, discussions
+
 
 # List of allowed emails
 allowed_emails = ["email1@example.com", "email2@example.com"]

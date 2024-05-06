@@ -31,7 +31,7 @@ def generate_text(prompt, api_key):
     discussions.append({"role": "user", "content": prompt})
     
     completion = openai.ChatCompletion.create(
-        model="GPT-4 Turbo",  # GPT-4 Turbo
+        model="gpt-4-turbo",  # GPT-4 Turbo
         messages=discussions
     )
 

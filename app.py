@@ -10,12 +10,14 @@ def generate_text(prompt, api_key, discussions):
     
     discussions.append({"role": "user", "content": prompt})
     
-    completion = openai.ChatCompletion.create(
-        model="gpt-4-turbo",  # GPT-4 Turbo
-        messages=discussions
+    completion = openai.Completion.create(
+        engine="text-davinci-003",  # GPT-3.5 Turbo
+        prompt="\n".join([msg['content'] for msg in discussions]),
+        temperature=0.7,
+        max_tokens=150
     )
 
-    response = completion.choices[0].message.content
+    response = completion.choices[0].text.strip()
     discussions.append({"role": "assistant", "content": response})
     return response, discussions
 
@@ -34,7 +36,11 @@ if user_email in allowed_emails:
     
     while True:
         # User input
-        prompt = st.text_input("Enter your prompt", value="Hi, how are you?")
+        prompt = st.text_input("Enter your prompt (type 'quit' to exit)", value="Hi, how are you?")
+        
+        # Check if user wants to quit
+        if prompt.lower().strip() == "quit":
+            break
         
         # Generate response
         if st.button("Generate Response"):
